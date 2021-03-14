@@ -1,0 +1,33 @@
+Dane członków zespołu:
+Spyrka Jarosław,spyrka.jarek@gmail.com , 1ID22A
+Wójcik Mateusz, mvteow@gmail.com , 1ID22A
+
+Temat projektu:
+43. Konwersja pomiędzy formatami
+
+Spis technologii:
+System opreacyjny: Windows 10
+Języki programowania: Java, JavaScript
+Frameworks: Spring Boot, Angular
+
+Lista funkcjonalnosci:
+konwersja miedzy formatami json-csv
+konwersja miedzy formatami json-xml
+pobieranie danych od uzytkownika w formie: plikowej, ze strony internetowej
+
+Harmonogram:
+marzec: projektowanie aplikacji
+kwiecien: opracowanie najważniejszych funkcji oraz szkielet aplikacji
+maj: podpięcie aplikacji back-end`owej do aplikacji webowej, dopracowanie pozostalych funkcjonalności
+
+Podział pracy:
+Jarosław Spyrka: front-end
+Mateusz Wójcik: back-end
+
+Tematy projektów:
+
+Programowanie systemów rozproszonych: Animacja fraktali
+Prace inżynierskie:
+Mateusz Wójcik: Projekt i implementacja inteligentnego modelu lustra
+Jarosław Spyrka: Projekt i implementacja aplikacji turystycznej
+
