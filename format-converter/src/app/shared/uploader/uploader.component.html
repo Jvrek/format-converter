@@ -1,26 +1,58 @@
-<div *ngFor="let progressInfo of progressInfos" class="mb-2">
-    <span>{{ progressInfo.fileName }}</span>
-    <div class="progress">
-        <mat-progress-bar role="progressbar" value="{{ progressInfo.value }}" mode="determinate">
-            {{ progressInfo.value }}%
-        </mat-progress-bar>
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-3 p0">
+            <mat-form-field class="select-model" appearance="fill">
+                <mat-label>Formatuj z</mat-label>
+                <mat-select (valueChange)="setListFormatsTo($event)">
+                    <mat-option *ngFor="let format of formats" [value]="format">
+                        {{ format }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-sm-3 select-model p0">
+            <mat-form-field style="
+            position: relative;
+            background-color: rgb(245, 244, 244);
+            height: 50px;
+            top: 20px;
+            padding-top: 13px;
+          ">
+                <!-- <ngx-mat-file-input [placeholder]="'Wybierz plik'" (change)="handleFileInput($event.target.files)">
+                </ngx-mat-file-input> -->
+                <mat-icon matSuffix>folder</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <div class="col-sm-3 select-model p0">
+            <button mat-raised-button class="standard-button" (click)="uploadFile()">
+                Konwertuj plik
+            </button>
+        </div>
+
+        <div class="col-sm-3 p0">
+            <mat-form-field class="select-model" appearance="fill">
+                <mat-label>Formatuj do</mat-label>
+                <mat-select (valueChange)="setFormatTo($event)">
+                    <mat-option *ngFor="let format of formatsWithoutSelected" [value]="format">
+                        {{ format }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
     </div>
 </div>
 
-<label class="btn btn-default">
-    <input type="file" multiple (change)="selectFiles($event)" />
-</label>
-
-<button class="btn btn-success" [disabled]="!selectedFiles" (click)="uploadFiles()">
-    Wyślij
-</button>
-
-<div class="alert alert-light" role="alert">{{ message }}</div>
-
-<div class="card">
-    <ul class="list-group list-group-flush" *ngFor="let file of fileInfos | async">
-        <li class="list-group-item">
-            <img src="../../../assets/file-icon.png">
-        </li>
-    </ul>
+<div class="wrapper">
+    <div style="margin-top: 30px" class="row">
+        <div style="
+          width: 800px;
+          height: 150px;
+          background-color: rgb(245, 244, 244);
+          left: 50px;
+        " class="col-sm-11">
+            <span style="position: relative; display: block; top: 10px" class="download">Pliki do pobrania</span>
+        </div>
+    </div>
 </div>

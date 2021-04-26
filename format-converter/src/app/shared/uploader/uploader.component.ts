@@ -11,74 +11,42 @@ declare var $: any;
   styleUrls: ['./uploader.component.scss']
 })
 export class UploaderComponent implements OnInit {
-  selectedFiles: FileList;
-  progressInfos = [];
-  message = '';
-  isValidFileExtension: boolean = false;
-  fileInfos: Observable<any>;
+  fileToUpload: File = null;
+
+  formatFrom: string;
+  formatTo: string;
+  formats: string[] = ['CSV', 'JSON', 'XML'];
+  formatsWithoutSelected: string[] = new Array();
 
   constructor(private uploadService: UploaderService) { }
 
-  ngOnInit() { }
-
-  selectFiles(event): void {
-    this.progressInfos = [];
-    this.selectedFiles = event.target.files;
-    this.isValidFileExtension = this.requiredFileType(this.selectedFiles);
+  ngOnInit(): void { }
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
   }
 
-  removeSelectedFiles() {
-    this.progressInfos = [];
-    this.isValidFileExtension = false;
+  uploadFile() {
+    let convertRequest: any = {
+      file: this.fileToUpload,
+      converted: "json"
+    };
+    this.uploadService.upload(convertRequest).subscribe((data: any) => {
+      console.log(data);
+    });
   }
 
-  uploadFiles() {
-    this.message = '';
-    let observableBatch = [];
-    for (let i = 0; i < this.selectedFiles.length; i++) {
-      observableBatch.push(this.upload(i, this.selectedFiles[i]));
+  setListFormatsTo(value: string) {
+    let newArray = [...this.formats];
+    const index = newArray.indexOf(value);
+
+    if (index > -1) {
+      newArray.splice(index, 1);
     }
-    return forkJoin(observableBatch);
+    this.formatsWithoutSelected = newArray;
+    this.formatFrom = value;
   }
 
-  upload(idx, file) {
-    this.progressInfos[idx] = { value: 0, fileName: file.name };
-    return this.uploadService.upload(file).pipe(
-      tap((event: any) => {
-        if (event.type === HttpEventType.UploadProgress) {
-          this.progressInfos[idx].value = Math.round(
-            (100 * event.loaded) / event.total
-          );
-        }
-      }),
-      catchError((err) => {
-        this.progressInfos[idx].value = 0;
-        this.message = 'Nie udało się dodać plików' + file.name;
-        return err;
-      })
-    );
-  }
-
-  downloadFiles(path: string) {
-    return (this.fileInfos = this.uploadService.getFiles(path));
-  }
-
-  private requiredFileType(
-    files: FileList,
-    requiredTypes: string[] = ['json']
-  ): boolean {
-    for (const key in files) {
-      if (Object.prototype.hasOwnProperty.call(files, key)) {
-        const element = files[key];
-        const extension = element.name.split('.')[1].toLowerCase();
-        if (!(requiredTypes.indexOf(extension) > -1)) {
-          this.selectedFiles = files = null;
-          this.message = 'Niewłaściwy format pliku, wymagane:' + requiredTypes;
-          return false;
-        }
-      }
-    }
-    this.message = '';
-    return true;
+  setFormatTo(value: string) {
+    this.formatTo = value;
   }
 }
