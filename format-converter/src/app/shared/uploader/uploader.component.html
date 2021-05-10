@@ -1,6 +1,6 @@
 <div class="wrapper">
     <div class="row">
-        <div class="col-sm-3 p0">
+        <!-- <div class="col-sm-3 p0">
             <mat-form-field class="select-model" appearance="fill">
                 <mat-label>Formatuj z</mat-label>
                 <mat-select (valueChange)="setListFormatsTo($event)">
@@ -9,19 +9,19 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-        </div>
+        </div> -->
 
         <div class="col-sm-3 select-model p0">
             <mat-form-field>
-                <!-- <ngx-mat-file-input [placeholder]="'Wybierz plik'" (change)="handleFileInput($event.target.files)">
-                </ngx-mat-file-input> -->
+                <ngx-mat-file-input [placeholder]="'Wybierz plik'" (change)="handleFileInput($event.target.files)">
+                </ngx-mat-file-input>
                 <mat-icon matSuffix>folder</mat-icon>
             </mat-form-field>
         </div>
 
         <div class="col-sm-3 select-model p0">
-            <button mat-raised-button class="standard-button" (click)="uploadFile()">
-                Konwertuj plik
+            <button mat-stroked-button color="primary" (click)="uploadFile()">
+                Konwertuj
             </button>
         </div>
 
@@ -29,7 +29,7 @@
             <mat-form-field class="select-model" appearance="fill">
                 <mat-label>Formatuj do</mat-label>
                 <mat-select (valueChange)="setFormatTo($event)">
-                    <mat-option *ngFor="let format of formatsWithoutSelected" [value]="format">
+                    <mat-option *ngFor="let format of formats" [value]="format">
                         {{ format }}
                     </mat-option>
                 </mat-select>
@@ -41,7 +41,26 @@
 <div class="wrapper">
     <div style="margin-top: 30px" class="row">
         <div class="col-sm-11">
-            <span style="position: relative; display: block; top: 10px" class="download">Pliki do pobrania</span>
+            <span style="position: relative; display: block; top: 10px" class="download">{{fileToDownlad}}</span>
         </div>
     </div>
+
+    <div class="col-sm-3 select-model p0">
+        <mat-form-field class="select-model" appearance="fill">
+            <mat-label>Rodzaj</mat-label>
+            <mat-select (valueChange)="setTypeTo($event)">
+                <mat-option *ngFor="let type of types" [value]="types">
+                    {{ type }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <a href="http://localhost:8080/api/file/{{fileToDownlad}}">
+            <button [disabled]="!fileToDownlad" mat-stroked-button color="primary">
+                Pobierz
+            </button>
+        </a>
+    </div>
+    <textarea style="width:80%; height:auto">
+        {{convertedText}}
+        </textarea>
 </div>

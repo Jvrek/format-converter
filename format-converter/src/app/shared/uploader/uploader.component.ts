@@ -12,11 +12,16 @@ declare var $: any;
 })
 export class UploaderComponent implements OnInit {
   fileToUpload: File = null;
+  fileToDownlad: string = null;
 
   formatFrom: string;
   formatTo: string;
-  formats: string[] = ['CSV', 'JSON', 'XML'];
+  formats: string[] = ['csv', 'json'];
+  types: string[] = ['Tekst', 'Plik'];
+
+  fileTo: string;
   formatsWithoutSelected: string[] = new Array();
+  convertedText: any;
 
   constructor(private uploadService: UploaderService) { }
 
@@ -26,12 +31,12 @@ export class UploaderComponent implements OnInit {
   }
 
   uploadFile() {
-    let convertRequest: any = {
-      file: this.fileToUpload,
-      converted: "json"
-    };
-    this.uploadService.upload(convertRequest).subscribe((data: any) => {
-      console.log(data);
+
+    const file = this.fileToUpload;
+
+    this.uploadService.upload(file, this.formatTo).subscribe((data: HttpResponse<any>) => {
+      console.log(data.body);
+      this.fileToDownlad = data.body?.message;
     });
   }
 
@@ -48,5 +53,16 @@ export class UploaderComponent implements OnInit {
 
   setFormatTo(value: string) {
     this.formatTo = value;
+  }
+
+  setTypeTo(value: string) {
+    this.fileTo = value;
+  }
+
+  downloadFile() {
+    this.uploadService.getFile(this.fileToDownlad).subscribe(
+      (res: any) => {
+        this.convertedText = JSON.stringify(res);
+      });
   }
 }
