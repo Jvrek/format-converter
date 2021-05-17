@@ -33,4 +33,8 @@ export class UploaderService {
   getFile(filename: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/file/${filename}`);
   }
+
+  getContent(filename: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/content/${filename}`);
+  }
 }

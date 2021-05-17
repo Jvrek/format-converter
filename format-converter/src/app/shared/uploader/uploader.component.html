@@ -27,7 +27,7 @@
 
         <div class="col-sm-3 p0">
             <mat-form-field class="select-model" appearance="fill">
-                <mat-label>Formatuj do</mat-label>
+                <mat-label>Konwertuj do</mat-label>
                 <mat-select (valueChange)="setFormatTo($event)">
                     <mat-option *ngFor="let format of formats" [value]="format">
                         {{ format }}
@@ -49,18 +49,21 @@
         <mat-form-field class="select-model" appearance="fill">
             <mat-label>Rodzaj</mat-label>
             <mat-select (valueChange)="setTypeTo($event)">
-                <mat-option *ngFor="let type of types" [value]="types">
+                <mat-option *ngFor="let type of types" [value]="type">
                     {{ type }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <a href="http://localhost:8080/api/file/{{fileToDownlad}}">
+        <a style="margin-bottom:15px;" *ngIf="fileTo == 'Plik'" href="http://localhost:8080/api/file/{{fileToDownlad}}">
             <button [disabled]="!fileToDownlad" mat-stroked-button color="primary">
-                Pobierz
+                Pobierz Plik
             </button>
         </a>
+        <button *ngIf="fileTo == 'Tekst'" mat-stroked-button color="primary" (click)="downloadContent()">
+            Pobierz Tekst
+        </button>
     </div>
-    <textarea style="width:80%; height:auto">
+    <textarea style="width:80%; min-height:300px">
         {{convertedText}}
         </textarea>
 </div>

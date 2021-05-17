@@ -57,10 +57,11 @@ export class UploaderComponent implements OnInit {
 
   setTypeTo(value: string) {
     this.fileTo = value;
+    console.log(this.fileTo)
   }
 
-  downloadFile() {
-    this.uploadService.getFile(this.fileToDownlad).subscribe(
+  downloadContent() {
+    this.uploadService.getContent(this.fileToDownlad).subscribe(
       (res: any) => {
         this.convertedText = JSON.stringify(res);
       });
